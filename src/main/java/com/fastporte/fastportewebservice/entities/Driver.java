@@ -46,7 +46,6 @@ public class Driver implements Serializable {
     private Date birthdate;
 
     @Column(name = "password", nullable = false)
-    @JsonIgnore
     private String password;
 
     @Column(name = "description", nullable = false)
