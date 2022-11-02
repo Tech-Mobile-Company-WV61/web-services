@@ -24,7 +24,7 @@ public class Client implements Serializable {
     private String name;
 
     @Column(name = "lastname", nullable = false, length = 100)
-    private String lastName;
+    private String lastname;
 
     @Column(name = "username", nullable = false, length = 100)
     private String username;
@@ -46,6 +46,8 @@ public class Client implements Serializable {
     private Date birthdate;
 
     @Column(name = "password", nullable = false)
-    @JsonIgnore
     private String password;
+
+    @Column(name = "description", nullable = false)
+    private String description;
 }
