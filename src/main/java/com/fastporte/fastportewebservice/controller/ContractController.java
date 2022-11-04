@@ -78,7 +78,7 @@ public class ContractController {
         }
     }
 
-    //Retornar los contratos por user(client/river) con status OFFER
+    //Retornar los contratos por user(client/driver) con status OFFER
     @GetMapping(value = "/offer/{user}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Contract>> findContractByStatusOfferUser( @PathVariable("user") String user, @PathVariable("id") Long id) {
         try {
