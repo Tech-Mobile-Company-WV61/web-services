@@ -1,8 +1,10 @@
 package com.fastporte.fastportewebservice.controller;
 
 
-import com.fastporte.fastportewebservice.entities.Experience;
+import com.fastporte.fastportewebservice.entities.Contract;
+import com.fastporte.fastportewebservice.entities.Driver;
 import com.fastporte.fastportewebservice.entities.Vehicle;
+import com.fastporte.fastportewebservice.service.IDriverService;
 import com.fastporte.fastportewebservice.service.IVehicleService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -20,9 +22,11 @@ import java.util.Optional;
 @RequestMapping("/api/vehicle")
 public class VehicleController {
     private final IVehicleService vehicleService;
+    private final IDriverService driverService;
 
-    public VehicleController(IVehicleService vehicleService) {
+    public VehicleController(IVehicleService vehicleService, IDriverService driverService) {
         this.vehicleService = vehicleService;
+        this.driverService = driverService;
     }
 
     //Retornar driver por id
@@ -39,23 +43,28 @@ public class VehicleController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    //@GetMapping(value = "/find/{type_card}/{category}/{quantity}",
-    //        produces = MediaType.APPLICATION_JSON_VALUE)
-    //public ResponseEntity<List<Vehicle>> finByType_cardQuantityCategory(
-    //        @PathVariable("type_card") String type_card,
-    //        @PathVariable("quantity") Long quantity,
-    //        @PathVariable("category") String category) {
-    //    try {
-    //        List<Vehicle> vehicle = vehicleService.finByType_cardQuantityCategory(type_card, quantity, category);
-    //        if (vehicle == null)
-    //            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //        return new ResponseEntity<>(vehicle, HttpStatus.OK);
-    //    } catch (Exception ex) {
-    //        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    //    }
-    //}
+
+    @GetMapping(value = "/find/{type_card}/{category}/{quantity}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Vehicle>> findByType_cardQuantityCategory(
+            @PathVariable("type_card") String type_card,
+            @PathVariable("quantity") Long quantity,
+            @PathVariable("category") String category) {
+        try {
+            List<Vehicle> vehicle = vehicleService.getAll();
+            vehicle.removeIf(vehicle_ -> !vehicle_.getType_card().equals(type_card));
+            vehicle.removeIf(vehicle_ -> !vehicle_.getQuantity().equals(quantity));
+            vehicle.removeIf(vehicle_ -> !vehicle_.getCategory().equals(category));
+            if (vehicle.size() > 0)
+                return new ResponseEntity<>(vehicle, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     // Insertar vehicle
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(value = "/{driverId}",consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Insert Vehicle", notes="Method to insert a vehicle")
     @ApiResponses({
@@ -63,10 +72,16 @@ public class VehicleController {
             @ApiResponse(code=404, message="Vehicle not created"),
             @ApiResponse(code=501, message="Vehicle server error")
     })
-    public ResponseEntity<Vehicle> insertExperience(@Valid @RequestBody Vehicle vehicle) {
+    public ResponseEntity<Vehicle> insertVehicle(@PathVariable("driverId") Long driverId,
+                                                    @Valid @RequestBody Vehicle vehicle) {
         try {
-            Vehicle vehicleNew = vehicleService.save(vehicle);
-            return ResponseEntity.status(HttpStatus.CREATED).body(vehicleNew);
+            Optional<Driver> driver = driverService.getById(driverId);
+            if (driver.isPresent()) {
+                vehicle.setDriver(driver.get());
+                Vehicle vehicleNew = vehicleService.save(vehicle);
+                return ResponseEntity.status(HttpStatus.CREATED).body(vehicleNew);
+            } else
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

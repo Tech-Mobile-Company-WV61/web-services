@@ -10,5 +10,5 @@ import java.util.List;
 public interface IVehicleRepository extends JpaRepository<Vehicle, Long> {
 
     List<Vehicle> findByDriverId(Long driverId);
-    //List<Vehicle> finByType_cardQuantityCategory(String type_card, Long quantity, String category);
+    //List<Vehicle> findByType_cardQuantityCategory(String type_card, Long quantity, String category);
 }

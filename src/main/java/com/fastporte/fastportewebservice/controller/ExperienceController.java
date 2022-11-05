@@ -1,8 +1,8 @@
 package com.fastporte.fastportewebservice.controller;
 
-import com.fastporte.fastportewebservice.entities.Client;
-import com.fastporte.fastportewebservice.entities.Experience;
-import com.fastporte.fastportewebservice.service.IExperienceService;
+
+import com.fastporte.fastportewebservice.entities.*;
+import com.fastporte.fastportewebservice.service.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -19,9 +19,11 @@ import java.util.Optional;
 @RequestMapping("/api/experience")
 public class ExperienceController {
     private final IExperienceService experienceService;
+    private final IDriverService driverService;
 
-    public ExperienceController(IExperienceService experienceService) {
+    public ExperienceController(IExperienceService experienceService, IDriverService driverService) {
         this.experienceService = experienceService;
+        this.driverService = driverService;
     }
 
     //Retornar driver por id
@@ -40,7 +42,7 @@ public class ExperienceController {
         }
     }
     // Insertar experience
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(value = "/{driverId}",consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Insert Experience", notes="Method to insert a Experience")
     @ApiResponses({
@@ -48,10 +50,17 @@ public class ExperienceController {
             @ApiResponse(code=404, message="Experience not created"),
             @ApiResponse(code=501, message="Experience server error")
     })
-    public ResponseEntity<Experience> insertExperience(@Valid @RequestBody Experience experience) {
+    public ResponseEntity<Experience> insertExperience(@PathVariable("driverId") Long driverId,
+                                                     @Valid @RequestBody Experience experience) {
         try {
+
+            Optional<Driver> driver = driverService.getById(driverId);
+        if (driver.isPresent()) {
+            experience.setDriver(driver.get());
             Experience experienceNew = experienceService.save(experience);
             return ResponseEntity.status(HttpStatus.CREATED).body(experienceNew);
+        } else
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -65,8 +74,8 @@ public class ExperienceController {
             @ApiResponse(code=404, message="Experience not updated"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Experience> updateClient(@PathVariable("id") Long id,
-                                               @Valid @RequestBody Experience experience) {
+    public ResponseEntity<Experience> updateExperience(@PathVariable("id") Long id,
+                                                       @Valid @RequestBody Experience experience) {
         try {
             Optional<Experience> experienceUpdate = experienceService.getById(id);
             if (!experienceUpdate.isPresent()) {
