@@ -63,7 +63,7 @@ public class ContractController {
 
     //Retornar los contratos por driver con status OFFER
     @GetMapping(value = "/offer/driver/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Contract>> findContractByStatusOffer( @PathVariable("id") Long id) {
+    public ResponseEntity<List<Contract>> findContractByStatusOffer(@PathVariable("id") Long id) {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getStatus().getStatus().equals("OFFER"));
@@ -80,13 +80,13 @@ public class ContractController {
 
     //Retornar los contratos por user(client/driver) con status OFFER
     @GetMapping(value = "/offer/{user}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Contract>> findContractByStatusOfferUser( @PathVariable("user") String user, @PathVariable("id") Long id) {
+    public ResponseEntity<List<Contract>> findContractByStatusOfferUser(@PathVariable("user") String user, @PathVariable("id") Long id) {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getStatus().getStatus().equals("OFFER"));
-            if(user.equals("client")){
+            if (user.equals("client")) {
                 contracts.removeIf(contract -> !contract.getClient().getId().equals(id));
-            }else if(user.equals("driver")){
+            } else if (user.equals("driver")) {
                 contracts.removeIf(contract -> !contract.getDriver().getId().equals(id));
             }
             if (contracts.size() > 0)
@@ -105,7 +105,7 @@ public class ContractController {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getStatus().getStatus().equals("PENDING"));
-            if(user.equals("client")) {
+            if (user.equals("client")) {
                 contracts.removeIf(contract -> !contract.getClient().getId().equals(id));
             } else if (user.equals("driver")) {
                 contracts.removeIf(contract -> !contract.getDriver().getId().equals(id));
@@ -129,7 +129,7 @@ public class ContractController {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getStatus().getStatus().equals("HISTORY"));
-            if(user.equals("client")) {
+            if (user.equals("client")) {
                 contracts.removeIf(contract -> !contract.getClient().getId().equals(id));
             } else if (user.equals("driver")) {
                 contracts.removeIf(contract -> !contract.getDriver().getId().equals(id));
@@ -156,7 +156,7 @@ public class ContractController {
             Optional<Client> client = clientService.getById(clientId);
             Optional<Driver> driver = driverService.getById(driverId);
             List<Contract> contracts = contractService.getAll();
-            System.out.println(contracts.get(contracts.size()-1).getId());
+            System.out.println(contracts.get(contracts.size() - 1).getId());
             if (client.isPresent() && driver.isPresent()) {
 
                 contract.setClient(client.get());
@@ -199,10 +199,10 @@ public class ContractController {
     //Obetner las notificaciones no leídas de un client
     @GetMapping(value = "/unread-notifications/{user}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Contract>> findNotificationsUnreadByUser(@PathVariable("id") Long id,
-                                                                          @PathVariable("user") String user) {
+                                                                        @PathVariable("user") String user) {
         try {
             List<Contract> contracts = contractService.getAll();
-            if(user.equals("client")) {
+            if (user.equals("client")) {
                 contracts.removeIf(contract -> !contract.getClient().getId().equals(id));
                 contracts.removeIf(contract -> contract.getNotification().getId().equals(1L));
             } else if (user.equals("driver")) {
@@ -251,7 +251,7 @@ public class ContractController {
             Optional<Contract> contract = contractService.getById(idContract);
             Optional<StatusContract> statusContract = statusContractService.getById(2L);
 
-            if(contract.isPresent() && statusContract.isPresent()){
+            if (contract.isPresent() && statusContract.isPresent()) {
                 Contract contractUpdate = contract.get();
                 contractUpdate.setId(idContract);
                 contractUpdate.setStatus(statusContract.get());
@@ -270,17 +270,17 @@ public class ContractController {
     //Actualizar el status de un contrato (solo de pending a history)
     @PutMapping(value = "/{idContract}/update-status/{idContractStatus}")
     public ResponseEntity<Contract> updateContractStatusPatch(@PathVariable("idContract") Long idContract,
-                                                         @PathVariable("idContractStatus") Long idContractStatus) {
+                                                              @PathVariable("idContractStatus") Long idContractStatus) {
         try {
 
-            if(idContractStatus <= 1 || idContractStatus > 3){
+            if (idContractStatus <= 1 || idContractStatus > 3) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             Optional<Contract> contract = contractService.getById(idContract);
             Optional<StatusContract> statusContract = statusContractService.getById(idContractStatus);
 
-            if(contract.isPresent() && statusContract.isPresent()){
+            if (contract.isPresent() && statusContract.isPresent()) {
                 Contract contractUpdate = contract.get();
                 contractUpdate.setId(idContract);
                 contractUpdate.setStatus(statusContract.get());
@@ -302,13 +302,13 @@ public class ContractController {
 
             Optional<Contract> contract = contractService.getById(idContract);
 
-            if(contract.isPresent()){
+            if (contract.isPresent()) {
 
                 Optional<Notification> notification;
                 Contract contractUpdate = contract.get();
                 contractUpdate.setId(idContract);
 
-                if(contractUpdate.getNotification().getId() == 0){
+                if (contractUpdate.getNotification().getId() == 0) {
                     notification = notificationService.getById(1L);
                 } else {
                     notification = notificationService.getById(0L);
@@ -326,9 +326,39 @@ public class ContractController {
         }
     }
 
-    //Cambiar el status de las notificaciones no leídas a leídas
-    @PutMapping(value = "/change-notification-status")
-    public ResponseEntity<Contract> updateContractNotificationPatch() {
+    //Cambiar el status de las notificaciones no leídas a leídas de un user
+    @PutMapping(value = "/notification-read/{user}/{id}")
+    public ResponseEntity<Contract> updateContractNotificationPatch(@PathVariable("id") Long id,
+                                                                    @PathVariable("user") String user) {
+
+        try {
+            List<Contract> contracts = contractService.getAll();
+            Optional<Notification> notification = notificationService.getById(1L);
+            if (user.equals("client")) {
+                contracts.removeIf(contract -> !contract.getClient().getId().equals(id));
+                contracts.removeIf(contract -> contract.getNotification().getId().equals(1L));
+            } else if (user.equals("driver")) {
+                contracts.removeIf(contract -> !contract.getDriver().getId().equals(id));
+                contracts.removeIf(contract -> contract.getNotification().getId().equals(1L));
+            }
+
+            if (contracts.size() > 0) {
+                contracts.forEach(contract -> {
+                    contract.setNotification(notification.get());
+                    try {
+                        contractService.save(contract);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        /*
         try {
 
             List<Contract> contracts = contractService.getAll();
@@ -350,7 +380,7 @@ public class ContractController {
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        }*/
     }
 
     //Cambiar el campo visible de un contrato a false
@@ -359,7 +389,7 @@ public class ContractController {
         try {
             Optional<Contract> contract = contractService.getById(idContract);
 
-            if(contract.isPresent()){
+            if (contract.isPresent()) {
                 Contract contractUpdate = contract.get();
                 contractUpdate.setId(idContract);
                 contractUpdate.setVisible(false);
