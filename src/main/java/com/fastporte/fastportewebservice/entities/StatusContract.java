@@ -18,7 +18,7 @@ public class StatusContract implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
+    //@JsonIgnore
     private Long id;
 
     @Column(name = "status", nullable = true)
