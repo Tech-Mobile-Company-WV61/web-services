@@ -353,7 +353,25 @@ public class ContractController {
         }
     }
 
+    //Cambiar el campo visible de un contrato a false
+    @PutMapping(value = "/{idContract}/change-visible")
+    public ResponseEntity<Contract> updateContractVisiblePatch(@PathVariable("idContract") Long idContract) {
+        try {
+            Optional<Contract> contract = contractService.getById(idContract);
 
+            if(contract.isPresent()){
+                Contract contractUpdate = contract.get();
+                contractUpdate.setId(idContract);
+                contractUpdate.setVisible(false);
+                contractService.save(contractUpdate);
+                return new ResponseEntity<>(contractUpdate, HttpStatus.OK);
 
+            } else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
