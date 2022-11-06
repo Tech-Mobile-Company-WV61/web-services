@@ -25,11 +25,11 @@ public class Vehicle implements Serializable {
     @MapsId
     private Driver driver;
 
-    @Column(name = "card", nullable = false)
-    private String card;
+    @Column(name = "brand", nullable = false)
+    private String brand;
 
-    @Column(name = "photo_card", nullable = false)
-    private String photo_card;
+    @Column(name = "photo", nullable = false)
+    private String photo_car;
 
     @Column(name = "type_car", nullable = false)
     private String type_car;

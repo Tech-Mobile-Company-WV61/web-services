@@ -26,7 +26,7 @@ public class Card implements Serializable {
     private String cardNickname;
 
     @Column(name = "card_number", nullable = false, length = 16)
-    private int cardNumber;
+    private String cardNumber;
 
     @Column(name = "expiration_date", nullable = false, length = 5)
     private Date expirationDate;
