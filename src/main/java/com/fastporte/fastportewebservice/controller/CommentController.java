@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/contracts")
 public class ContractController {
@@ -148,7 +149,7 @@ public class ContractController {
     }
 
     //Crear un contrato por driver y cliente
-    @PostMapping(value = "/add/client={clientId}/driver={driverId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/add/{clientId}/{driverId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Contract> insertContract(@PathVariable("clientId") Long clientId,
                                                    @PathVariable("driverId") Long driverId,
                                                    @Valid @RequestBody Contract contract) {
@@ -163,7 +164,8 @@ public class ContractController {
                 contract.setDriver(driver.get());
                 contract.setStatus(statusContractService.getById(1L).get());
                 contract.setNotification(notificationService.getById(0L).get());
-                System.out.println(contract);
+                System.out.println(driverId);
+                System.out.println(clientId);
                 Contract contractNew = contractService.save(contract);
                 return ResponseEntity.status(HttpStatus.CREATED).body(contractNew);
             } else

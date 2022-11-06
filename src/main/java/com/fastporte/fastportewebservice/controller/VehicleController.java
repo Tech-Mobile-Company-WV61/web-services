@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/vehicle")
 public class VehicleController {
@@ -44,17 +45,15 @@ public class VehicleController {
         }
     }
 
-    @GetMapping(value = "/find/{type_card}/{category}/{quantity}",
+    @GetMapping(value = "/find/{type_car}/{quantity}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Vehicle>> findByType_cardQuantityCategory(
-            @PathVariable("type_card") String type_card,
-            @PathVariable("quantity") Long quantity,
-            @PathVariable("category") String category) {
+            @PathVariable("type_car") String type_car,
+            @PathVariable("quantity") Long quantity) {
         try {
             List<Vehicle> vehicle = vehicleService.getAll();
-            vehicle.removeIf(vehicle_ -> !vehicle_.getType_card().equals(type_card));
+            vehicle.removeIf(vehicle_ -> !vehicle_.getType_car().equals(type_car));
             vehicle.removeIf(vehicle_ -> !vehicle_.getQuantity().equals(quantity));
-            vehicle.removeIf(vehicle_ -> !vehicle_.getCategory().equals(category));
             if (vehicle.size() > 0)
                 return new ResponseEntity<>(vehicle, HttpStatus.OK);
             else

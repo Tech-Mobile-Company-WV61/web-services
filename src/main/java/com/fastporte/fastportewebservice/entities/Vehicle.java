@@ -31,8 +31,8 @@ public class Vehicle implements Serializable {
     @Column(name = "photo_card", nullable = false)
     private String photo_card;
 
-    @Column(name = "type_card", nullable = false)
-    private String type_card;
+    @Column(name = "type_car", nullable = false)
+    private String type_car;
 
     @Column(name = "quantity", nullable = false)
     private Long quantity;
