@@ -4,7 +4,7 @@ Feature: Client Deleting
   So that it can't be available to application
 
   Background:
-    Given The Endpoint "http://localhost:%d/api/clients" is available
+    Given The Client Endpoint "http://localhost:%d/api/clients" is available
 
   @delete-client
   Scenario: Delete Client

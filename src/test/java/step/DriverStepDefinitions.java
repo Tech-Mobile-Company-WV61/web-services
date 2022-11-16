@@ -1,6 +1,6 @@
 package step;
 
-import com.fastporte.fastportewebservice.entities.Client;
+import com.fastporte.fastportewebservice.entities.Driver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ClientStepDefinitions {
+public class DriverStepDefinitions {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -26,38 +26,38 @@ public class ClientStepDefinitions {
     private String endpointPath;
     private ResponseEntity<String> responseEntity;
 
-    @Given("The Client Endpoint {string} is available")
-    public void theClientEndpointIsAvailable(String endpointPath) {
+    @Given("The Driver Endpoint {string} is available")
+    public void theDriverEndpointIsAvailable(String endpointPath) {
         this.endpointPath = String.format(endpointPath, randomServerPort);
     }
 
-    @When("A Client Request is sent with values {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}")
-    public void aClientRequestIsSentWithValues(String name, String lastname, String username, String photo, String email, String phone, String region, String birthdate, String password, String description) {
+    @When("A Driver Request is sent with values {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}")
+    public void aDriverRequestIsSentWithValues(String name, String lastname, String username, String photo, String email, String phone, String region, String birthdate, String password, String description) {
         Date birthdateDate = new SimpleDateFormat("dd/MM/yyyy").parse(birthdate, new java.text.ParsePosition(0));
-        Client client = new Client(0L, name, lastname, username, photo, email, phone, region, birthdateDate, password, description);
+        Driver driver = new Driver(0L, name, lastname, username, photo, email, phone, region, birthdateDate, password, description);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<Client> request = new HttpEntity<>(client, headers);
+        HttpEntity<Driver> request = new HttpEntity<>(driver, headers);
         responseEntity = testRestTemplate.postForEntity(endpointPath, request, String.class);
     }
 
-    @Then("A Client with status {int} is received")
-    public void aClientWithStatusIsReceived(int expectedStatusCode) {
+    @Then("A Driver with status {int} is received")
+    public void aDriverWithStatusIsReceived(int expectedStatusCode) {
         int actualStatusCode = responseEntity.getStatusCodeValue();
         assertThat(expectedStatusCode).isEqualTo(actualStatusCode);
     }
 
-    @When("A Client Delete is sent with id value {string}")
-    public void aClientDeleteIsSentWithIdValue(String idClient) {
+    @When("A Driver Delete is sent with id value {string}")
+    public void aDriverDeleteIsSentWithIdValue(String idDriver) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("id", idClient);
+        params.put("id", idDriver);
         testRestTemplate.delete(endpointPath+"/{id}", params);
         responseEntity = new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @When("All Clients who are registered in the DB")
-    public void allClientsWhoAreRegisteredInTheDB() {
+    @When("All Drivers who are registered in the DB")
+    public void allDriversWhoAreRegisteredInTheDB() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
@@ -65,18 +65,18 @@ public class ClientStepDefinitions {
         System.out.println(responseEntity);
     }
 
-    @Then("List of Clients with status {int} is received")
-    public void listOfClientsWithStatusIsReceived(int expectedStatusCode) {
+    @Then("List of Drivers with status {int} is received")
+    public void listOfDriversWithStatusIsReceived(int expectedStatusCode) {
         int actualStatusCode = responseEntity.getStatusCodeValue();
         assertThat(expectedStatusCode).isEqualTo(actualStatusCode);
     }
 
-    @When("A Client Selected is sent with id value {string}")
-    public void aClientSelectedIsSentWithIdValue(String idClient) {
+    @When("A Driver Selected is sent with id value {string}")
+    public void aDriverSelectedIsSentWithIdValue(String idDriver) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("id", idClient);
-        Client client = testRestTemplate.getForObject(endpointPath+"/{id}", Client.class, params);
-        responseEntity = new ResponseEntity<>(client.toString(), HttpStatus.OK);
-        System.out.println(client.toString());
+        params.put("id", idDriver);
+        Driver driver = testRestTemplate.getForObject(endpointPath+"/{id}", Driver.class, params);
+        responseEntity = new ResponseEntity<>(driver.toString(), HttpStatus.OK);
+        System.out.println(driver.toString());
     }
 }

@@ -4,7 +4,7 @@ Feature: Client Adding
   So that it can be available to application
 
   Background:
-    Given The Endpoint "http://localhost:%d/api/clients" is available
+    Given The Client Endpoint "http://localhost:%d/api/clients" is available
 
   @post-adding
   Scenario: Add Client

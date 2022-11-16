@@ -4,7 +4,7 @@ Feature: Client Getting
   So that it can look at the application
 
   Background:
-    Given The Endpoint "http://localhost:%d/api/clients" is available
+    Given The Client Endpoint "http://localhost:%d/api/clients" is available
 
   @get-all-client
   Scenario: Get All Clients
