@@ -7,13 +7,12 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,5 +46,37 @@ public class ClientStepDefinitions {
     public void aClientWithStatusIsReceived(int expectedStatusCode) {
         int actualStatusCode = responseEntity.getStatusCodeValue();
         assertThat(expectedStatusCode).isEqualTo(actualStatusCode);
+    }
+
+    @When("A Client Delete is sent with id value {string}")
+    public void aClientDeleteIsSentWithIdValue(String idClient) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("id", idClient);
+        testRestTemplate.delete(endpointPath+"/{id}", params);
+        responseEntity = new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @When("All Clients who are registered in the DB")
+    public void allClientsWhoAreRegisteredInTheDB() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        responseEntity = testRestTemplate.exchange(endpointPath, HttpMethod.GET, entity, String.class);
+        System.out.println(responseEntity);
+    }
+
+    @Then("List of Clients with status {int} is received")
+    public void listOfClientsWithStatusIsReceived(int expectedStatusCode) {
+        int actualStatusCode = responseEntity.getStatusCodeValue();
+        assertThat(expectedStatusCode).isEqualTo(actualStatusCode);
+    }
+
+    @When("A Client Selected is sent with id value {string}")
+    public void aClientSelectedIsSentWithIdValue(String idClient) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("id", idClient);
+        Client client = testRestTemplate.getForObject(endpointPath+"/{id}", Client.class, params);
+        responseEntity = new ResponseEntity<>(client.toString(), HttpStatus.OK);
+        System.out.println(client.toString());
     }
 }
