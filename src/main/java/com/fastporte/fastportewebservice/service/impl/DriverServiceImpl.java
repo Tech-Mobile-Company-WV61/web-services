@@ -20,11 +20,13 @@ public class DriverServiceImpl implements IDriverService {
     }
 
     @Override
+    @Transactional
     public Driver save(Driver driver) throws Exception {
         return driverRepository.save(driver);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) throws Exception {
         driverRepository.deleteById(id);
     }

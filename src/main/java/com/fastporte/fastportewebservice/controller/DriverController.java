@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/drivers")
 @Api(tags="Driver", value="Web Service RESTful of Drivers")
@@ -75,7 +76,7 @@ public class DriverController {
             @ApiResponse(code=404, message="Driver not created"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Driver> insertDriver(@Valid @RequestBody Driver driver) {
+    public ResponseEntity<Driver> insertDriver(@RequestBody Driver driver) {
         try {
             Driver driverNew = driverService.save(driver);
             return ResponseEntity.status(HttpStatus.CREATED).body(driverNew);

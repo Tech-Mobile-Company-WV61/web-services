@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/clients")
 @Api(tags="Client", value="Web Service RESTful of Clients")
