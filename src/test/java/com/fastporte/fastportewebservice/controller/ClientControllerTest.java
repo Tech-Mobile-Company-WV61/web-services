@@ -31,7 +31,8 @@ public class ClientControllerTest {
     void setUp() {
         clientList = new ArrayList<>();
         clientList.add(new Client(1L, "Antonio", "Martinez",
-                "Antonio Martinez", "photo", "am@gmail.com", "983654313", "Amazonas",
+                "Antonio Martinez", "photo", "am@gmail.com",
+                "983654313", "Amazonas",
                 new Date(1998, Calendar.JULY, 21), "pass321",
                 "I want to have the best service"));
         clientList.add(new Client(1L, "Juan", "Perez",
