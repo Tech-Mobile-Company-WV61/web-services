@@ -17,9 +17,13 @@ import javax.validation.Valid;
 public class CommentController {
 
     private final ICommentService commentService;
+    private final IClientService clientService;
+    private final IDriverService driverService;
 
-    public CommentController(ICommentService commentService) {
+    public CommentController(ICommentService commentService, IClientService clientService, IDriverService driverService) {
         this.commentService = commentService;
+        this.clientService = clientService;
+        this.driverService = driverService;
 
     }
 
@@ -38,6 +42,7 @@ public class CommentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     //Retornar contrato por id
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Comment> findContractById(@PathVariable("id") Long id) {
@@ -73,7 +78,7 @@ public class CommentController {
 
     //Retornar los commentarios por driver id
     @GetMapping(value = "/driver/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Comment>> findCommentById( @PathVariable("id") Long id) {
+    public ResponseEntity<List<Comment>> findCommentById(@PathVariable("id") Long id) {
         try {
             List<Comment> comments = commentService.getAll();
 
@@ -82,6 +87,27 @@ public class CommentController {
                 return new ResponseEntity<>(comments, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = "/add/{clientId}/{driverId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Comment> saveComment(@Valid @RequestBody Comment comment, @PathVariable("clientId") Long clientId,
+                                               @PathVariable("driverId") Long driverId) {
+        try {
+            Optional<Client> client = clientService.getById(clientId);
+            Optional<Driver> driver = driverService.getById(driverId);
+            if (client.isPresent() && driver.isPresent()) {
+
+                comment.setClient(client.get());
+                comment.setDriver(driver.get());
+                Comment newComment = commentService.save(comment);
+                return new ResponseEntity<>(newComment, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
