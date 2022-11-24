@@ -6,6 +6,7 @@ import com.fastporte.fastportewebservice.entities.Driver;
 import com.fastporte.fastportewebservice.entities.Vehicle;
 import com.fastporte.fastportewebservice.service.IDriverService;
 import com.fastporte.fastportewebservice.service.IVehicleService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/vehicle")
+@Api(tags="Vehicle", value="Web Service RESTful of Vehicles")
 public class VehicleController {
     private final IVehicleService vehicleService;
     private final IDriverService driverService;
@@ -32,6 +34,12 @@ public class VehicleController {
 
     //Retornar driver por id
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Vehicle by Id", notes="Method to find a vehicle by id")
+    @ApiResponses({
+            @ApiResponse(code=201, message="Vehicle found"),
+            @ApiResponse(code=404, message="Vehicle not found"),
+            @ApiResponse(code=501, message="Internal server error")
+    })
     public ResponseEntity<Vehicle> findVehicleById(@PathVariable("id") Long id) {
         try {
             Optional<Vehicle> vehicle = vehicleService.getById(id);
@@ -47,6 +55,12 @@ public class VehicleController {
 
     @GetMapping(value = "/find/{category}/{quantity}",
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Vehicle by Category & Quantity", notes="Method to find a client by its category and quantity")
+    @ApiResponses({
+            @ApiResponse(code=201, message="Vehicle found"),
+            @ApiResponse(code=404, message="Vehicle not found"),
+            @ApiResponse(code=501, message="Internal server error")
+    })
     public ResponseEntity<List<Vehicle>> findByType_cardQuantityCategory(
             @PathVariable("category") String category,
             @PathVariable("quantity") Long quantity) {

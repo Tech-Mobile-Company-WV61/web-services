@@ -3,6 +3,7 @@ package com.fastporte.fastportewebservice.controller;
 
 import com.fastporte.fastportewebservice.entities.*;
 import com.fastporte.fastportewebservice.service.*;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/experience")
+@Api(tags="Experience", value="Web Service RESTful of Experiences")
 public class ExperienceController {
     private final IExperienceService experienceService;
     private final IDriverService driverService;
@@ -27,8 +29,14 @@ public class ExperienceController {
         this.driverService = driverService;
     }
 
-    //Retornar driver por id
+    //Retornar experience por id
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Experience by Id", notes="Method to find a experience by id")
+    @ApiResponses({
+            @ApiResponse(code=201, message="Experience found"),
+            @ApiResponse(code=404, message="Experience not found"),
+            @ApiResponse(code=501, message="Internal server error")
+    })
     public ResponseEntity<List<Experience>> findExperienceById(@PathVariable("id") Long id) {
         try {
 
@@ -109,5 +117,4 @@ public class ExperienceController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
