@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'api-fastporte'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_29C894CFC9B8493D94F60633CCDD851C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A29DCAD67D9B4AC89B140D892923C509 }}
           package: '*.jar'
