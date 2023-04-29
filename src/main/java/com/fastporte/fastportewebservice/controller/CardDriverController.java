@@ -9,10 +9,7 @@ import com.fastporte.fastportewebservice.service.IDriverService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -69,15 +66,15 @@ public class CardDriverController {
             @ApiResponse(code=404, message="Cards driver not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public Authentication findAllTest() throws FirebaseAuthException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String uid = authentication.getName(); // Firebase uid
-        return authentication;
+    public String findAllTest() throws FirebaseAuthException {
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // uid = authentication.getName(); // Firebase uid
+        return "authentication";
     }
 
     //Obtener los cards de un driver por id
     @GetMapping(value = "/{id}", produces = "application/json")
-    @ApiOperation(value="Card Driver by Id", notes="Method to find a card driver by id")
+    @ApiOperation(value="Card Driver by Id", notes="Method to find a card driver by id", authorizations = {@Authorization(value = "JWT")})
     @ApiResponses({
             @ApiResponse(code=201, message="Card Driver found"),
             @ApiResponse(code=404, message="Card Driver not found"),
