@@ -9,8 +9,8 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +35,7 @@ public class DriverController {
             @ApiResponse(code=501, message="Internal server error")
     })
     public ResponseEntity<List<Driver>> getAllDrivers() {
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try {
             List<Driver> drivers = driverService.getAll();
             if (drivers.size() > 0) {

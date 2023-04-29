@@ -40,6 +40,7 @@ public class VehicleController {
             @ApiResponse(code=404, message="Vehicle not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
+
     public ResponseEntity<Vehicle> findVehicleById(@PathVariable("id") Long id) {
         try {
             Optional<Vehicle> vehicle = vehicleService.getById(id);
