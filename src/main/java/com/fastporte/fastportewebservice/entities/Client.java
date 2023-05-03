@@ -17,7 +17,6 @@ import java.util.Date;
 public class Client implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
@@ -44,9 +43,6 @@ public class Client implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "birthdate", nullable = false)
     private Date birthdate;
-
-    @Column(name = "password", nullable = false)
-    private String password;
 
     @Column(name = "description", nullable = false)
     private String description;

@@ -40,9 +40,5 @@ public class DriverServiceImpl implements IDriverService {
     public Optional<Driver> getById(Long id) throws Exception {
         return driverRepository.findById(id);
     }
-
-    @Override
-    public Driver findByEmailAndPassword(String email, String password) {
-        return driverRepository.findByEmailAndPassword(email, password);
-    }
+    
 }
