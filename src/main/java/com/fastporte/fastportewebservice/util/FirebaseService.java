@@ -26,6 +26,7 @@ public class FirebaseService {
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setStorageBucket("gener8-c323f.appspot.com")
                 .build();
 
         FirebaseApp.initializeApp(options);
