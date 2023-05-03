@@ -41,8 +41,4 @@ public class ClientServiceImpl implements IClientService {
         return clientRepository.findById(id);
     }
 
-    @Override
-    public Client findByEmailAndPassword(String email, String password) throws Exception {
-        return clientRepository.findByEmailAndPassword(email, password);
-    }
 }

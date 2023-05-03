@@ -131,19 +131,4 @@ public class ClientController {
         }
     }
 
-    // Retornar client por email y password
-    @GetMapping(value = "/searchEmailPassword/{email}/{password}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Client> findClientByEmailAndPassword(
-            @PathVariable("email") String email,
-            @PathVariable("password") String password) {
-        try {
-            Client client = clientService.findByEmailAndPassword(email, password);
-            if (client == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-           return new ResponseEntity<>(client, HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }

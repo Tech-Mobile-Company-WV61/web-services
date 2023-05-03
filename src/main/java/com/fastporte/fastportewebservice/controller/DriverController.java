@@ -129,19 +129,4 @@ public class DriverController {
         }
     }
 
-    // Retornar driver por email y password [ POR VER ]
-    @GetMapping(value = "/searchEmailPassword/{email}/{password}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Driver> findDriverByEmailAndPassword(
-            @PathVariable("email") String email,
-            @PathVariable("password") String password) {
-        try {
-            Driver driver = driverService.findByEmailAndPassword(email, password);
-            if (driver == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            return new ResponseEntity<>(driver, HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }
