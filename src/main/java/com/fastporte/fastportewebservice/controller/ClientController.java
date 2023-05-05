@@ -55,7 +55,7 @@ public class ClientController {
             @ApiResponse(code=404, message="Client not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Client> findClientById(@PathVariable("id") Long id) {
+    public ResponseEntity<Client> findClientById(@PathVariable("id") String id) {
         try {
             Optional<Client> client = clientService.getById(id);
             if (client.isPresent())
@@ -95,7 +95,7 @@ public class ClientController {
             @ApiResponse(code=404, message="Client not updated"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Client> updateClient(@PathVariable("id") Long id,
+    public ResponseEntity<Client> updateClient(@PathVariable("id") String id,
                                                @Valid @RequestBody Client client) {
         try {
             Optional<Client> clientUpdate = clientService.getById(id);
@@ -118,7 +118,7 @@ public class ClientController {
             @ApiResponse(code=404, message="Client not deleted"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Client> deleteClient(@PathVariable("id") Long id) {
+    public ResponseEntity<Client> deleteClient(@PathVariable("id") String id) {
         try {
             Optional<Client> clientDelete = clientService.getById(id);
             if (!clientDelete.isPresent()) {

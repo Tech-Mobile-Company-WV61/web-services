@@ -197,8 +197,8 @@ public class ContractController {
             @ApiResponse(code=404, message="Contract not created"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Contract> insertContract(@PathVariable("clientId") Long clientId,
-                                                   @PathVariable("driverId") Long driverId,
+    public ResponseEntity<Contract> insertContract(@PathVariable("clientId") String clientId,
+                                                   @PathVariable("driverId") String driverId,
                                                    @Valid @RequestBody Contract contract) {
         try {
             Optional<Client> client = clientService.getById(clientId);
@@ -312,7 +312,7 @@ public class ContractController {
             @ApiResponse(code=501, message="Internal server error")
     })
     public ResponseEntity<Contract> updateContractStatusOfferToPending(@PathVariable("idContract") Long idContract,
-                                                                       @PathVariable("idDriver") Long idDriver) {
+                                                                       @PathVariable("idDriver") String idDriver) {
         try {
 
             Optional<Contract> contract = contractService.getById(idContract);

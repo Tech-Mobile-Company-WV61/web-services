@@ -27,7 +27,7 @@ public class DriverServiceImpl implements IDriverService {
 
     @Override
     @Transactional
-    public void delete(Long id) throws Exception {
+    public void delete(String id) throws Exception {
         driverRepository.deleteById(id);
     }
 
@@ -37,7 +37,7 @@ public class DriverServiceImpl implements IDriverService {
     }
 
     @Override
-    public Optional<Driver> getById(Long id) throws Exception {
+    public Optional<Driver> getById(String id) throws Exception {
         return driverRepository.findById(id);
     }
 
