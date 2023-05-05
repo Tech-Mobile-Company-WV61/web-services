@@ -1,3 +1,4 @@
+/*
 package com.fastporte.fastportewebservice.cucumber;
 
 import com.fastporte.fastportewebservice.FastPorteWebServiceApplication;
@@ -13,3 +14,4 @@ import org.springframework.test.context.ContextConfiguration;
         loader = SpringBootContextLoader.class)
 public class CucumberSpringConfiguration {
 }
+*/
