@@ -27,7 +27,7 @@ public class ClientServiceImpl implements IClientService {
 
     @Override
     @Transactional
-    public void delete(Long id) throws Exception {
+    public void delete(String id) throws Exception {
         clientRepository.deleteById(id);
     }
 
@@ -37,7 +37,7 @@ public class ClientServiceImpl implements IClientService {
     }
 
     @Override
-    public Optional<Client> getById(Long id) throws Exception {
+    public Optional<Client> getById(String id) throws Exception {
         return clientRepository.findById(id);
     }
 

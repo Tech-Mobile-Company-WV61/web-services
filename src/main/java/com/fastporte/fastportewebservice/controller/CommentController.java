@@ -106,8 +106,8 @@ public class CommentController {
             @ApiResponse(code=404, message="Comment not created"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Comment> saveComment(@Valid @RequestBody Comment comment, @PathVariable("clientId") Long clientId,
-                                               @PathVariable("driverId") Long driverId) {
+    public ResponseEntity<Comment> saveComment(@Valid @RequestBody Comment comment, @PathVariable("clientId") String clientId,
+                                               @PathVariable("driverId") String driverId) {
         try {
             Optional<Client> client = clientService.getById(clientId);
             Optional<Driver> driver = driverService.getById(driverId);

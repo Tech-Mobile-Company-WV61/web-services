@@ -88,7 +88,7 @@ public class CardClientController {
             @ApiResponse(code=404, message="Card Client not created"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<CardClient> addCardToClient(@PathVariable("idClient") Long idClient,
+    public ResponseEntity<CardClient> addCardToClient(@PathVariable("idClient") String idClient,
                                                       @Valid @RequestBody Card card) {
         try {
             Optional<Client> client = clientService.getById(idClient);
@@ -119,7 +119,7 @@ public class CardClientController {
             @ApiResponse(code=404, message="Card Client not deleted"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<HttpStatus> deleteCardFromClient(@PathVariable("idClient") Long idClient,
+    public ResponseEntity<HttpStatus> deleteCardFromClient(@PathVariable("idClient") String idClient,
                                                            @PathVariable("idCard") Long idCard) {
         try {
             Optional<Client> client = clientService.getById(idClient);

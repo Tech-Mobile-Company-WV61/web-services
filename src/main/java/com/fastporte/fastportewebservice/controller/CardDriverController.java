@@ -105,7 +105,7 @@ public class CardDriverController {
             @ApiResponse(code=404, message="Card driver not created"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<CardDriver> addCardToDriver(@PathVariable("idDriver") Long idDriver,
+    public ResponseEntity<CardDriver> addCardToDriver(@PathVariable("idDriver") String idDriver,
                                                       @Valid @RequestBody Card card) {
         try {
             Optional<Driver> driver = driverService.getById(idDriver);
@@ -136,7 +136,7 @@ public class CardDriverController {
             @ApiResponse(code=404, message="Card driver not deleted"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<HttpStatus> deleteCardFromDriver(@PathVariable("idDriver") Long idDriver,
+    public ResponseEntity<HttpStatus> deleteCardFromDriver(@PathVariable("idDriver") String idDriver,
                                                            @PathVariable("idCard") Long idCard) {
         try {
             Optional<Driver> driver = driverService.getById(idDriver);

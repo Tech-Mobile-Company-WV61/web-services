@@ -38,40 +38,7 @@ public class ContractControllerTest {
 
     private List<Contract> contractList;
 
-    @BeforeEach
-    void setUp() {
-        contractList = new ArrayList<>();
-        contractList.add(
-                new Contract(1L, "moving", "Lima", "Arequipa", ParseDate("2021-07-21"), ParseTime("05:50:00"),
-                        ParseTime("17:50:00"), "500", "20", "Looking for a moving driver", true,
-                        new Client(1L, "Antonio", "Martinez", "Antonio Martinez", "photo",
-                                "am@gmail.com", "983654313", "Amazonas", new Date(1998, Calendar.JULY, 21), "pass321", "I want to have the best service"),
-                        new Driver(1L, "Roger", "Juarez", "Roger Juarez", "photo", "am@gmail.com",
-                                "983654313", "Amazonas", ParseDate("1995/08/23"), "pass321",
-                                "Hi, I'm Roger Juarez and I'm a driver"),
-                        new StatusContract(1L, "OFFER"),
-                        new Notification(1L, false)));
-        contractList.add(
-                new Contract(2L, "private", "Lima", "Ancash", ParseDate("2021-08-11"), ParseTime("07:00:00"),
-                        ParseTime("18:50:00"), "500", "20", "Looking for a moving driver", true,
-                        new Client(2L, "Rodrigo", "Sabino", "Rodrigo Sabino", "photo",
-                                "rs@gmail.com", "983654312", "Junin", ParseDate("1999/07/01"), "pass321", "I want to have the best service"),
-                        new Driver(2L, "Jean", "Lopez", "Jean Lopez", "photo", "jl@gmail.com",
-                                "983654322", "Amazonas", ParseDate("1995/08/23"), "pass321",
-                                "Hi, I'm Jean Lopez and I'm a driver"),
-                        new StatusContract(2L, "PENDING"),
-                        new Notification(1L, false)));
-        contractList.add(
-                new Contract(3L, "heavy load", "Lima", "Tacna", ParseDate("2021-08-11"), ParseTime("07:00:00"),
-                        ParseTime("18:50:00"), "500", "20", "Looking for a heavy load driver", true,
-                        new Client(3L, "Esteban", "Corrales", "Esteban Corrales", "photo",
-                                "ec@gmail.com", "983654312", "Junin", ParseDate("2000/07/01"), "pass321", "I want to have the best service"),
-                        new Driver(3L, "Pedro", "Socorro", "Pedro Socorro", "photo", "jl@gmail.com",
-                                "983654322", "Amazonas", ParseDate("1994/08/23"), "pass321",
-                                "Hi, I'm Pedro Socorro and I'm a driver"),
-                        new StatusContract(3L, "HISTORY"),
-                        new Notification(2L, true)));
-    }
+
 
     public static Date ParseDate(String date) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -125,6 +92,7 @@ public class ContractControllerTest {
 //                        .accept(MediaType.APPLICATION_JSON))
 //                .andExpect(status().isCreated());
 //    }
+
 
 
     public static String asJsonString(final Object obj) {

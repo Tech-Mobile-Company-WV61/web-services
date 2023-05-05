@@ -56,7 +56,7 @@ public class DriverController {
             @ApiResponse(code=404, message="Driver not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Driver> findDriverById(@PathVariable("id") Long id) {
+    public ResponseEntity<Driver> findDriverById(@PathVariable("id") String id) {
         try {
             Optional<Driver> driver = driverService.getById(id);
             if (driver.isPresent())
@@ -94,7 +94,7 @@ public class DriverController {
             @ApiResponse(code=404, message="Driver not updated"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Driver> updateDriver(@PathVariable("id") Long id,
+    public ResponseEntity<Driver> updateDriver(@PathVariable("id") String id,
                                                @Valid @RequestBody Driver driver) {
         try {
             Optional<Driver> driverUpdate = driverService.getById(id);
@@ -116,7 +116,7 @@ public class DriverController {
             @ApiResponse(code=404, message="Driver not deleted"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Driver> deleteDriver(@PathVariable("id") Long id) {
+    public ResponseEntity<Driver> deleteDriver(@PathVariable("id") String id) {
         try {
             Optional<Driver> driverDelete = driverService.getById(id);
             if (!driverDelete.isPresent()) {

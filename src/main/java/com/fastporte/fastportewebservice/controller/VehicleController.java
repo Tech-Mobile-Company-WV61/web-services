@@ -87,7 +87,7 @@ public class VehicleController {
             @ApiResponse(code=404, message="Vehicle not created"),
             @ApiResponse(code=501, message="Vehicle server error")
     })
-    public ResponseEntity<Vehicle> insertVehicle(@PathVariable("driverId") Long driverId,
+    public ResponseEntity<Vehicle> insertVehicle(@PathVariable("driverId") String driverId,
                                                     @Valid @RequestBody Vehicle vehicle) {
         try {
             Optional<Driver> driver = driverService.getById(driverId);

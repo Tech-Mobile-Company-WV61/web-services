@@ -17,7 +17,7 @@ import java.util.Date;
 public class Driver implements Serializable {
 
     @Id
-    private Long id;
+    private String id;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;

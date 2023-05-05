@@ -59,7 +59,7 @@ public class ExperienceController {
             @ApiResponse(code=404, message="Experience not created"),
             @ApiResponse(code=501, message="Experience server error")
     })
-    public ResponseEntity<Experience> insertExperience(@PathVariable("driverId") Long driverId,
+    public ResponseEntity<Experience> insertExperience(@PathVariable("driverId") String driverId,
                                                      @Valid @RequestBody Experience experience) {
         try {
 
