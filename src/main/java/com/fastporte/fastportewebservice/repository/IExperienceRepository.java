@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface IExperienceRepository extends JpaRepository<Experience, Long> {
-    List<Experience> findByDriverId(Long driverId);
+    List<Experience> findByDriverId(String driverId);
 }

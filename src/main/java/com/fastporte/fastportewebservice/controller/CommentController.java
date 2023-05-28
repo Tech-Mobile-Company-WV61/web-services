@@ -84,7 +84,7 @@ public class CommentController {
             @ApiResponse(code=404, message="Comment not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<List<Comment>> findCommentById(@PathVariable("id") Long id) {
+    public ResponseEntity<List<Comment>> findCommentById(@PathVariable("id") String id) {
         try {
             List<Comment> comments = commentService.getAll();
 

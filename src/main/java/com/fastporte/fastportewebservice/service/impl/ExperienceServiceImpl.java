@@ -28,7 +28,7 @@ public class ExperienceServiceImpl implements IExperienceService {
         experienceRepository.deleteById(id);
     }
     @Override
-    public List<Experience> findByDriverId(Long driverId) throws Exception {
+    public List<Experience> findByDriverId(String driverId) throws Exception {
         return experienceRepository.findByDriverId(driverId);
     }
     @Override
