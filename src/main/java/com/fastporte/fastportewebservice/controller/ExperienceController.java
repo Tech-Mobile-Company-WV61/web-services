@@ -37,7 +37,7 @@ public class ExperienceController {
             @ApiResponse(code=404, message="Experience not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<List<Experience>> findExperienceById(@PathVariable("id") Long id) {
+    public ResponseEntity<List<Experience>> findExperienceById(@PathVariable("id") String id) {
         try {
 
             List<Experience> experience = experienceService.findByDriverId(id);
