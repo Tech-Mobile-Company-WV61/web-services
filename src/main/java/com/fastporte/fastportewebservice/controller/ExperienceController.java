@@ -60,9 +60,8 @@ public class ExperienceController {
             @ApiResponse(code=501, message="Experience server error")
     })
     public ResponseEntity<Experience> insertExperience(@PathVariable("driverId") String driverId,
-                                                     @Valid @RequestBody Experience experience) {
+                                                      @RequestBody Experience experience) {
         try {
-
             Optional<Driver> driver = driverService.getById(driverId);
         if (driver.isPresent()) {
             experience.setDriver(driver.get());

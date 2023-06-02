@@ -18,18 +18,18 @@ import java.sql.Time;
 public class Experience implements Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "driver_1")
+    @JoinColumn(name = "driver_id", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @MapsId
     private Driver driver;
 
     @Column(name = "job", nullable = false)
     private String job;
 
-    @Column(name = "time", nullable = false)
+    //@Column(name = "time", nullable = false)
     // @Temporal(TemporalType.TIMESTAMP)
-    private Time time;
+    //private Time time;
 }
