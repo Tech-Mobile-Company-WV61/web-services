@@ -87,7 +87,7 @@ public class ContractController {
             @ApiResponse(code=404, message="Contracts not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<List<Contract>> findContractByStatusOffer(@PathVariable("id") Long id) {
+    public ResponseEntity<List<Contract>> findContractByStatusOffer(@PathVariable("id") String id) {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getStatus().getStatus().equals("OFFER"));
@@ -110,7 +110,7 @@ public class ContractController {
             @ApiResponse(code=404, message="Contracts not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<List<Contract>> findContractByStatusOfferUser(@PathVariable("user") String user, @PathVariable("id") Long id) {
+    public ResponseEntity<List<Contract>> findContractByStatusOfferUser(@PathVariable("user") String user, @PathVariable("id") String id) {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getStatus().getStatus().equals("OFFER"));
@@ -137,7 +137,7 @@ public class ContractController {
             @ApiResponse(code=404, message="Contracts not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<List<Contract>> findContractByStatusPending(@PathVariable("id") Long id, @PathVariable("user") String user) {
+    public ResponseEntity<List<Contract>> findContractByStatusPending(@PathVariable("id") String id, @PathVariable("user") String user) {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getStatus().getStatus().equals("PENDING"));
@@ -167,7 +167,7 @@ public class ContractController {
             @ApiResponse(code=404, message="Contracts not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<List<Contract>> findContractByStatusHistory(@PathVariable("id") Long id, @PathVariable("user") String user) {
+    public ResponseEntity<List<Contract>> findContractByStatusHistory(@PathVariable("id") String id, @PathVariable("user") String user) {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getStatus().getStatus().equals("HISTORY"));
@@ -231,7 +231,7 @@ public class ContractController {
             @ApiResponse(code=404, message="Notifications not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<List<Contract>> findNotificationsByClient(@PathVariable("id") Long id) {
+    public ResponseEntity<List<Contract>> findNotificationsByClient(@PathVariable("id") String id) {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getClient().getId().equals(id));
@@ -253,7 +253,7 @@ public class ContractController {
             @ApiResponse(code=404, message="Unread notifications not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<List<Contract>> findNotificationsUnreadByUser(@PathVariable("id") Long id,
+    public ResponseEntity<List<Contract>> findNotificationsUnreadByUser(@PathVariable("id") String id,
                                                                         @PathVariable("user") String user) {
         try {
             List<Contract> contracts = contractService.getAll();
@@ -283,7 +283,7 @@ public class ContractController {
             @ApiResponse(code=404, message="Notifications not found"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<List<Contract>> findNotificationsByDriver(@PathVariable("id") Long id) {
+    public ResponseEntity<List<Contract>> findNotificationsByDriver(@PathVariable("id") String id) {
         try {
             List<Contract> contracts = contractService.getAll();
             contracts.removeIf(contract -> !contract.getDriver().getId().equals(id));
@@ -413,7 +413,7 @@ public class ContractController {
             @ApiResponse(code=404, message="Notification status not updated"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Contract> updateContractNotificationPatch(@PathVariable("id") Long id,
+    public ResponseEntity<Contract> updateContractNotificationPatch(@PathVariable("id") String id,
                                                                     @PathVariable("user") String user) {
 
         try {
