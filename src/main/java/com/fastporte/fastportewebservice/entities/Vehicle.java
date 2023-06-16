@@ -17,12 +17,12 @@ import java.io.Serializable;
 public class Vehicle implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @MapsId
     private Driver driver;
 
     @Column(name = "brand", nullable = false)
