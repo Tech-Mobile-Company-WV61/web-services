@@ -101,6 +101,30 @@ public class VehicleController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(value = "/driver/{driverId}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Vehicle by DriverId", notes="Method to find a vehicle by driver Id")
+    @ApiResponses({
+            @ApiResponse(code=201, message="Vehicle found"),
+            @ApiResponse(code=404, message="Vehicle not found"),
+            @ApiResponse(code=501, message="Internal server error")
+    })
+    public ResponseEntity<List<Vehicle>> findyDriverId(
+            @PathVariable("driverId") String driverId) {
+        try {
+            List<Vehicle> vehicle = vehicleService.getAll();
+            vehicle.removeIf(vehicle_ -> !vehicle_.getDriver().getId().equals(driverId));
+
+            if (vehicle.size() > 0)
+                return new ResponseEntity<>(vehicle, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     // Actualizar vehicle
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
