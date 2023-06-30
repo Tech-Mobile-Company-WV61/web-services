@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+//import java.util.Date;
 
 @Entity
 @Table(name = "experience")
@@ -29,7 +29,7 @@ public class Experience implements Serializable{
     @Column(name = "job", nullable = false)
     private String job;
 
-    @Column(name = "time", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date time;
+//    @Column(name = "time", nullable = false)
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date time;
 }
