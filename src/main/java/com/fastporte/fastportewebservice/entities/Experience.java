@@ -29,7 +29,7 @@ public class Experience implements Serializable{
     @Column(name = "job", nullable = false)
     private String job;
 
-    @Column(name = "time", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Time time;
+    //@Column(name = "time", nullable = false)
+    //@Temporal(TemporalType.TIMESTAMP)
+    //private Time time;
 }
