@@ -202,8 +202,6 @@ public class ContractController {
                                                    @PathVariable("driverId") String driverId,
                                                    @RequestBody CreateConctracDto newContract) {
         try {
-            System.out.println(newContract.getTimeArrival());
-
             Contract contract = new Contract();
             contract.setAmount(newContract.getAmount());
             contract.setContractDate(newContract.getContractDate());
@@ -220,9 +218,6 @@ public class ContractController {
             Optional<Driver> driver = driverService.getById(driverId);
             List<Contract> contracts = contractService.getAll();
 
-            
-
-            //System.out.println(contracts.get(contracts.size() - 1).getId());
             if (client.isPresent() && driver.isPresent()) {
 
                 contract.setClient(client.get());

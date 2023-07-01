@@ -2,6 +2,7 @@ package com.fastporte.fastportewebservice.controller;
 
 import com.fastporte.fastportewebservice.entities.*;
 import com.fastporte.fastportewebservice.service.*;
+import com.fastporte.fastportewebservice.dto.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -106,13 +107,16 @@ public class CommentController {
             @ApiResponse(code=404, message="Comment not created"),
             @ApiResponse(code=501, message="Internal server error")
     })
-    public ResponseEntity<Comment> saveComment(@Valid @RequestBody Comment comment, @PathVariable("clientId") String clientId,
+    public ResponseEntity<Comment> saveComment(@RequestBody CreateCommentDto commentNew, @PathVariable("clientId") String clientId,
                                                @PathVariable("driverId") String driverId) {
         try {
+            Comment comment = new Comment();
+            comment.setComment(commentNew.getComment());
+            comment.setStar(commentNew.getStar());
+
             Optional<Client> client = clientService.getById(clientId);
             Optional<Driver> driver = driverService.getById(driverId);
             if (client.isPresent() && driver.isPresent()) {
-
                 comment.setClient(client.get());
                 comment.setDriver(driver.get());
                 Comment newComment = commentService.save(comment);
