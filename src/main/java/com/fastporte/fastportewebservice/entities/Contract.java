@@ -46,10 +46,12 @@ public class Contract implements Serializable {
     private Date contractDate;
 
     @Column(name = "time_departure", nullable = false)
-    private Time timeDeparture;
+    //@Temporal(TemporalType.DATE)
+    private String timeDeparture;
 
     @Column(name = "time_arrival", nullable = false)
-    private Time timeArrival;
+    //@Temporal(TemporalType.DATE)
+    private String timeArrival;
 
     @Column(name = "amount", nullable = false)
     private String amount;

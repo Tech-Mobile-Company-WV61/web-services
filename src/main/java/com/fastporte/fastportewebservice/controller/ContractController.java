@@ -2,6 +2,7 @@ package com.fastporte.fastportewebservice.controller;
 
 import com.fastporte.fastportewebservice.entities.*;
 import com.fastporte.fastportewebservice.service.*;
+import com.fastporte.fastportewebservice.dto.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -199,12 +200,29 @@ public class ContractController {
     })
     public ResponseEntity<Contract> insertContract(@PathVariable("clientId") String clientId,
                                                    @PathVariable("driverId") String driverId,
-                                                   @Valid @RequestBody Contract contract) {
+                                                   @RequestBody CreateConctracDto newContract) {
         try {
+            System.out.println(newContract.getTimeArrival());
+
+            Contract contract = new Contract();
+            contract.setAmount(newContract.getAmount());
+            contract.setContractDate(newContract.getContractDate());
+            contract.setTimeDeparture(newContract.getTimeDeparture());
+            contract.setTimeArrival(newContract.getTimeArrival());
+            contract.setDescription(newContract.getDescription());
+            contract.setFrom(newContract.getFrom());
+            contract.setTo(newContract.getTo());
+            contract.setQuantity(newContract.getQuantity());
+            contract.setSubject(newContract.getSubject());
+            contract.setVisible(newContract.isVisible());
+
             Optional<Client> client = clientService.getById(clientId);
             Optional<Driver> driver = driverService.getById(driverId);
             List<Contract> contracts = contractService.getAll();
-            System.out.println(contracts.get(contracts.size() - 1).getId());
+
+            
+
+            //System.out.println(contracts.get(contracts.size() - 1).getId());
             if (client.isPresent() && driver.isPresent()) {
 
                 contract.setClient(client.get());
