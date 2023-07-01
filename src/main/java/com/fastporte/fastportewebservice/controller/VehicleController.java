@@ -1,6 +1,7 @@
 package com.fastporte.fastportewebservice.controller;
 
 
+import com.fastporte.fastportewebservice.entities.Client;
 import com.fastporte.fastportewebservice.entities.Contract;
 import com.fastporte.fastportewebservice.entities.Driver;
 import com.fastporte.fastportewebservice.entities.Vehicle;
@@ -148,6 +149,27 @@ public class VehicleController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="List of Vehicles", notes="Method to list all vehicles")
+    @ApiResponses({
+            @ApiResponse(code=201, message="Vehicles found"),
+            @ApiResponse(code=404, message="Vehicles not found"),
+            @ApiResponse(code=501, message="Internal server error")
+    })
+    public ResponseEntity<List<Vehicle>> getAllClients() {
+        try {
+            List<Vehicle> clients = vehicleService.getAll();
+            if (clients.size() > 0) {
+                return new ResponseEntity<>(clients, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     // Eliminar vehicle
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Delete Vehicle", notes="Method to delete a vehicle")
